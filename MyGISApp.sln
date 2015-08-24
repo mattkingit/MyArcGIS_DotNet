@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGISApp", "MyGISApp\MyGISApp.csproj", "{BED168E9-4529-4D8D-BFFA-63CB50CF3B68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGeocodeApp", "MyGeocodeApp\MyGeocodeApp.csproj", "{BC90233B-2281-469B-B5F2-2CCCF1187800}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BED168E9-4529-4D8D-BFFA-63CB50CF3B68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED168E9-4529-4D8D-BFFA-63CB50CF3B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED168E9-4529-4D8D-BFFA-63CB50CF3B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED168E9-4529-4D8D-BFFA-63CB50CF3B68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC90233B-2281-469B-B5F2-2CCCF1187800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC90233B-2281-469B-B5F2-2CCCF1187800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC90233B-2281-469B-B5F2-2CCCF1187800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC90233B-2281-469B-B5F2-2CCCF1187800}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
