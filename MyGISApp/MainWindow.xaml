@@ -1,0 +1,62 @@
+﻿<Window x:Class="MyGISApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
+        xmlns:local="clr-namespace:MyGISApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <esri:MapView x:Name="MyMapView">
+            <esri:Map x:Name="MyMap">
+                <esri:Map.InitialViewpoint>
+                    <esri:ViewpointExtent XMin="-9113800"
+                                 YMin="5077300"
+                                 XMax="-9078300"
+                                 YMax="5091800"/>
+                </esri:Map.InitialViewpoint>
+                <esri:ArcGISTiledMapServiceLayer ID="BaseMap" ServiceUri="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"/>
+                
+            </esri:Map>
+            
+        </esri:MapView>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top"  
+                  Margin="10,10,0,0" Width="120"
+                  SelectionChanged="comboBox_SelectionChanged">
+                <ComboBox.Items>
+                    <ComboBoxItem Content="Streets" IsSelected="True" Tag="http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"/>
+                    <ComboBoxItem Content="Topo" Tag="http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer"/>
+                    <ComboBoxItem Content="Imagery" Tag="http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"/>
+                </ComboBox.Items>
+            </ComboBox>
+        <StackPanel Background="White" Width="300" HorizontalAlignment="Right" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Search:"/>
+                <TextBox x:Name="SearchTextBox" Width="100" Margin="10,0" HorizontalContentAlignment="Right" Text="Turtle"/>
+                <ComboBox x:Name="ItemTypeComboBox" SelectedValuePath="Content" Width="120">
+                    <ComboBoxItem Content="Web map" IsSelected="True"/>
+                    <ComboBoxItem Content="Feature service" />
+                    <ComboBoxItem Content="Basemap"/>
+                </ComboBox>
+            </StackPanel>
+            <Button x:Name="SearchButton" Content="Search ArcGIS.com" Margin="20" Click="SearchButton_Click"/>
+            <ListBox x:Name="ResultsLIstBox" Margin="20,0" MaxHeight="200" SelectionChanged="ResultList_SelectionChanged">
+                <!-- results shown here -->
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Title}"/>
+                            <TextBlock Text="{Binding Owner}" FontSize="9"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock x:Name="SnippetTextBlock" Text="" Height="50" Margin="10" TextWrapping="Wrap"/>
+            <Image Name="ThumbnailImage" Stretch="UniformToFill" Width="200" Height="133"/>
+            <Button x:Name="ShowMapButton" Content="Show Map" Margin="5" Width="150" IsEnabled="False" Click="ShowMapButton_Click"/>
+        </StackPanel>
+        
+        
+    </Grid>
+</Window>
