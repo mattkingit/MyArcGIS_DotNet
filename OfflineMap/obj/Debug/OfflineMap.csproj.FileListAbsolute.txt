@@ -1,0 +1,1 @@
+C:\Development\arcgis\MyGISApp\OfflineMap\bin\Debug\OfflineMap.exe.config

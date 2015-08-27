@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGeocodeApp", "MyGeocodeAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrivingDirections", "DrivingDirections\DrivingDirections.csproj", "{BD863790-86EA-4116-977D-BD8B0621613D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfflineMap", "OfflineMap\OfflineMap.csproj", "{57EAB5DB-2E8D-4290-9C81-01333837DC7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BD863790-86EA-4116-977D-BD8B0621613D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD863790-86EA-4116-977D-BD8B0621613D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD863790-86EA-4116-977D-BD8B0621613D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57EAB5DB-2E8D-4290-9C81-01333837DC7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57EAB5DB-2E8D-4290-9C81-01333837DC7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57EAB5DB-2E8D-4290-9C81-01333837DC7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57EAB5DB-2E8D-4290-9C81-01333837DC7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
