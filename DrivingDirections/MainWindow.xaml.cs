@@ -104,6 +104,26 @@ namespace DrivingDirections
                 routeGraphics.Graphics.Add(routeGraphic);
                 await MyMapView.SetViewAsync(routeGraphic.Geometry.Extent);
 
+                var directionsBuilder = new System.Text.StringBuilder();
+                var totalMiles = 0.0;
+                var totalMinutes = 0.0;
+                var step = 1;
+
+                foreach (var d in firstRoute.RouteDirections)
+                {
+                    // appends a step number followed by a tab followed by the directions, then a new line
+                    directionsBuilder.AppendFormat("{0} \t {1}", step.ToString(), d.Text + "\n");
+                    step++;
+
+                    totalMiles += d.GetLength(LinearUnits.Miles);
+                    totalMinutes += d.Time.TotalMinutes;
+                }
+
+                // update the app UI
+                this.RouteDistance.Text = totalMiles.ToString("0.00") + " miles";
+                this.RouteTime.Text = totalMinutes.ToString("0.00") + " minutes";
+                this.DirectionsTextBlock.Text = directionsBuilder.ToString();
+
             }
             catch (Exception exp)
             {
