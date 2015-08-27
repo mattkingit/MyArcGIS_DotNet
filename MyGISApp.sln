@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGISApp", "MyGISApp\MyGISA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGeocodeApp", "MyGeocodeApp\MyGeocodeApp.csproj", "{BC90233B-2281-469B-B5F2-2CCCF1187800}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrivingDirections", "DrivingDirections\DrivingDirections.csproj", "{BD863790-86EA-4116-977D-BD8B0621613D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BC90233B-2281-469B-B5F2-2CCCF1187800}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC90233B-2281-469B-B5F2-2CCCF1187800}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC90233B-2281-469B-B5F2-2CCCF1187800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD863790-86EA-4116-977D-BD8B0621613D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD863790-86EA-4116-977D-BD8B0621613D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD863790-86EA-4116-977D-BD8B0621613D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD863790-86EA-4116-977D-BD8B0621613D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

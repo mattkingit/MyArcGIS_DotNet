@@ -38,4 +38,3 @@ C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MyGISApp.Properties.Resources.
 C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MyGISApp.csproj.GenerateResource.Cache
 C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MyGISApp.exe
 C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MyGISApp.pdb
-C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MyGISApp.csprojResolveAssemblyReference.cache
