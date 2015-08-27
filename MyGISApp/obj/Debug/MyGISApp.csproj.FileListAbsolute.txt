@@ -28,6 +28,7 @@ C:\Development\arcgis\MyGISApp\MyGISApp\bin\Debug\ru\Esri.ArcGISRuntime.resource
 C:\Development\arcgis\MyGISApp\MyGISApp\bin\Debug\sv\Esri.ArcGISRuntime.resources.dll
 C:\Development\arcgis\MyGISApp\MyGISApp\bin\Debug\zh-CN\Esri.ArcGISRuntime.resources.dll
 C:\Development\arcgis\MyGISApp\MyGISApp\bin\Debug\zh-Hans\Esri.ArcGISRuntime.resources.dll
+C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MyGISApp.csprojResolveAssemblyReference.cache
 C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MainWindow.g.cs
 C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\App.g.cs
 C:\Development\arcgis\MyGISApp\MyGISApp\obj\Debug\MyGISApp_MarkupCompile.cache

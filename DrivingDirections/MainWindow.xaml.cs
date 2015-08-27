@@ -68,6 +68,42 @@ namespace DrivingDirections
                 routeGraphics.Graphics.Add(fromMapGraphic);
                 routeGraphics.Graphics.Add(toMapGraphic);
 
+                var uri = new Uri("http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route");
+                var routeTask = new OnlineRouteTask(uri);
+
+                var routeParams = await routeTask.GetDefaultParametersAsync();
+                routeParams.OutSpatialReference = MyMapView.SpatialReference;
+                routeParams.DirectionsLengthUnit = LinearUnits.Miles;
+                routeParams.ReturnDirections = true;
+
+                // add stop parameters
+                var stopGraphics = new List<Graphic>();
+                stopGraphics.Add(from);
+                stopGraphics.Add(to);
+                routeParams.SetStops(stopGraphics);
+
+                // save the route
+                var routeResult = await routeTask.SolveAsync(routeParams);
+
+                if(routeResult == null || routeResult.Routes == null || routeResult.Routes.Count == 0)
+                {
+                    throw new Exception("Unable to solve the route.");
+                }
+
+                var firstRoute = routeResult.Routes[0];
+
+                var routeFeature = firstRoute.RouteFeature;
+                var routeSym = new SimpleLineSymbol
+                {
+                    Color = Colors.Navy,
+                    Style = SimpleLineStyle.Dash,
+                    Width = 2
+                };
+                var routeGraphic = new Graphic(routeFeature.Geometry, routeSym);
+
+                routeGraphics.Graphics.Add(routeGraphic);
+                await MyMapView.SetViewAsync(routeGraphic.Geometry.Extent);
+
             }
             catch (Exception exp)
             {
