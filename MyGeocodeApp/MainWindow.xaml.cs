@@ -32,9 +32,7 @@ namespace MyGeocodeApp
 
         private async void FindAddressButton_Click(object sender, RoutedEventArgs e)
         {
-            var uri = new Uri("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-            var token = String.Empty;
-            var locator = new OnlineLocatorTask(uri, token);
+            OnlineLocatorTask locator = GetLocation();
 
             var findParams = new OnlineLocatorFindParameters(AddressTextBox.Text);
             findParams.OutSpatialReference = MyMapView.SpatialReference;
@@ -42,7 +40,7 @@ namespace MyGeocodeApp
 
             var results = await locator.FindAsync(findParams, new System.Threading.CancellationToken());
 
-            if(results.Count > 0)
+            if (results.Count > 0)
             {
                 var firstMatch = results[0].Feature;
                 var matchLocation = firstMatch.Geometry as MapPoint;
@@ -62,6 +60,31 @@ namespace MyGeocodeApp
                                                matchLocation.Y + 100);
                 await MyMapView.SetViewAsync(matchExtent);
             }
+        }
+
+        private static OnlineLocatorTask GetLocation()
+        {
+            var uri = new Uri("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+            var token = String.Empty;
+            var locator = new OnlineLocatorTask(uri, token);
+            return locator;
+        }
+
+        private async void ReverseGeocdoeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var mapPoint = await MyMapView.Editor.RequestPointAsync();
+
+            var mapPointGeo = GeometryEngine.Project(mapPoint, SpatialReferences.Wgs84) as MapPoint;
+            OnlineLocatorTask locator = GetLocation();
+
+            var addressInfo = await locator.ReverseGeocodeAsync(mapPointGeo, 100, new System.Threading.CancellationToken());
+
+            var address = addressInfo.AddressFields["Address"] + ", " +
+                          addressInfo.AddressFields["City"] + ", " +
+                          addressInfo.AddressFields["Region"] + ", " +
+                          addressInfo.AddressFields["Postal"];
+
+            MessageBox.Show(address);
         }
     }
 }

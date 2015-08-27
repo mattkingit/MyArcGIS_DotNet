@@ -21,6 +21,7 @@
                 <TextBox x:Name="AddressTextBox" Text="411 N. Franklin St., Tampa, FL 33602" Margin="10,0"/>
                 <Button x:Name="FindAddressButton" Content="Find" Click="FindAddressButton_Click"/>
             </StackPanel>
+            <Button x:Name="ReverseGeocodeButton" Content="Reverse Geocode" Click="ReverseGeocdoeButton_Click"/>
         </StackPanel>
         
         
