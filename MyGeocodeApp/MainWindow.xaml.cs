@@ -47,6 +47,15 @@ namespace MyGeocodeApp
                 var firstMatch = results[0].Feature;
                 var matchLocation = firstMatch.Geometry as MapPoint;
 
+                var matchSym = new PictureMarkerSymbol();
+                var pictureURI = new Uri("http://static.arcgis.com/images/Symbols/Basic/GreenStickpin.png");
+                await matchSym.SetSourceAsync(pictureURI);
+
+                var matchGraphic = new Graphic(matchLocation, matchSym);
+
+                var graphicsLayer = MyMap.Layers["GeocodeResults"] as GraphicsLayer;
+                graphicsLayer.Graphics.Add(matchGraphic);
+
                 var matchExtent = new Envelope(matchLocation.X - 100,
                                                matchLocation.Y - 100,
                                                matchLocation.X + 100,
