@@ -62,7 +62,7 @@
                     </StackPanel>
                     <StackPanel x:Name="StatusPanel" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"
                                 Orientation="Vertical" Visibility="Collapsed" Margin="0,10">
-                        <ListBox x:Name="StatusMessageList" Width="350" Height="80" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                        <ListBox x:Name="StatusMessagesList" Width="350" Height="80" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                         <ProgressBar x:Name="StatusProgressBar" Width="350" Height="5"/>
                     </StackPanel>
                 </Grid>
