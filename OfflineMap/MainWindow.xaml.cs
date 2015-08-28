@@ -35,11 +35,13 @@ namespace OfflineMap
 
         private string localTileCachePath;
         private string localGeodatabasePath;
+        private CancellationTokenSource cancellationTokenSource;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            MyMapView.NavigationCompleted += (s, e) => { GenerateLocalTilesButton.IsEnabled = MyMapView.Scale < 6000000; };
             MyMapView.Loaded += MyMapView_Loaded;
         }
 
@@ -49,9 +51,98 @@ namespace OfflineMap
             TryLoadOnlineLayers();
         }
 
-        private void GetTiles(object sender, RoutedEventArgs e)
+        private async void GetTiles(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                // show the status controls
+                StatusPanel.Visibility = Visibility.Visible;
+                StatusMessageList.Items.Add("Requesting tile cache ...");
 
+                // cancel if an earlier call was made
+                if (cancellationTokenSource != null)
+                {
+                    cancellationTokenSource.Cancel();
+                }
+
+                // get a cancellation token for this task
+                cancellationTokenSource = new CancellationTokenSource();
+                var cancelToken = cancellationTokenSource.Token;
+
+                // create a new ExportTileCachTask to generate the tiles
+                var exportTilesTask = new ExportTileCacheTask(new Uri(basemapUrl));
+
+                //define options for the new tiles (extent, scale levels, format)
+                var generateOptions = new GenerateTileCacheParameters();
+                generateOptions.Format = ExportTileCacheFormat.CompactCache;
+                generateOptions.MinScale = 6000000.0;
+                generateOptions.MaxScale = 1.0;
+
+                // download the tile package to the app's local folder
+                var outFolder = System.AppDomain.CurrentDomain.BaseDirectory;
+                var downloadOptions = new DownloadTileCacheParameters(outFolder);
+
+                //overwrite the file if it already exists
+                downloadOptions.OverwriteExistingFiles = true;
+
+                // check generation progress every two seconds
+                var checkInterval = TimeSpan.FromSeconds(2);
+
+                var creationProgress = new Progress<ExportTileCacheJob>(p =>
+                {
+                    StatusMessageList.Items.Clear();
+                    foreach(var m in p.Messages)
+                    {
+                        // find messages with percent coplete
+                        // "Finished:: 9 percent", e.g.
+                        if (m.Description.Contains("Finished::"))
+                        {
+                            // parse out the percentage complete and update the progress bar
+                            var numString = m.Description.Substring(m.Description.IndexOf("::") + 2, 3).Trim();
+                            var pct = 0.0;
+                            if (double.TryParse(numString,out pct))
+                            {
+                                StatusProgressBar.Value = pct;
+                            }
+                            else
+                            {
+                                // show other status message in the list
+                                StatusMessageList.Items.Add(m.Description);
+                            }
+                        }
+                    }
+                });
+
+                // dhow download progress
+                var downloadProgress = new Progress<ExportTileCacheDownloadProgress>(p =>
+                {
+                    StatusProgressBar.Value = p.ProgressPercentage;
+                });
+
+                // generate the tiles and download them
+                var result = await exportTilesTask.GenerateTileCacheAndDownloadAsync(generateOptions,
+                    downloadOptions, checkInterval, cancelToken, creationProgress, downloadProgress);
+
+                // when the task completes, store the path to the local tile cache
+                this.localTileCachePath = result.OutputPath;
+                LocalDataPathTextBlock.Text = this.localTileCachePath;
+                LocalTilesPathTextBlock.ToolTip = this.localTileCachePath;
+
+                //clear the wroking messages, report success
+                StatusProgressBar.Value = 100;
+                StatusMessageList.Items.Clear();
+                StatusMessageList.Items.Add("Local tiles created at " + this.localTileCachePath);
+            }
+            catch (Exception exp)
+            {
+                StatusMessageList.Items.Clear();
+                StatusMessageList.Items.Add("Unable to get local tiles: " + exp.Message);
+            }
+            finally
+            {
+                // reset the progress indicator
+                StatusProgressBar.Value = 0;
+            }
         }
 
         private void DataOptionChecked(object sender, RoutedEventArgs e)
