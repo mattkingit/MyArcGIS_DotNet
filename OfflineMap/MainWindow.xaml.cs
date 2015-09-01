@@ -257,6 +257,34 @@ namespace OfflineMap
             }
         }
 
+        private async void TryLoadLocalLayer()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(this.localGeodatabasePath))
+                {
+                    throw new Exception("Local features do not yet exist. Please generate them first.");
+                }
+
+                if (string.IsNullOrEmpty(this.localTileCachePath))
+                {
+                    throw new Exception("Local tiles do not yet exist. Please generate them first.");
+                }
+
+                // create a local tiled layer
+                var basemapLayer = new ArcGISLocalTiledLayer(this.localTileCachePath);
+
+                // open the local geodatabase, get the first (only) table, create a FeatureLayer to display it
+                var localGdb = await Geodatabase.OpenAsync(this.localGeodatabasePath);
+                var gdbTable = localGdb.FeatureTables.FirstOrDefault();
+                var operationLayer = new FeatureLayer
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Unable to load local layers: " + exp.Message, "Load Layers");
+            }
+        }
+
         private async void GenerateFeatuersCompleteCallback(GeodatabaseStatusInfo statusInfo, Exception ex)
         {
             if(ex != null)
