@@ -154,7 +154,16 @@ namespace OfflineMap
 
         private void DataOptionChecked(object sender, RoutedEventArgs e)
         {
+            MyMapView.Map.Layers.Clear();
 
+            if (UseOnlineDataOption.IsChecked == true)
+            {
+                TryLoadOnlineLayers();
+            }
+            else // offline
+            {
+                TryLoadLocalLayers();
+            }
         }
 
         private async void GetFeatures(object sender, RoutedEventArgs e)
@@ -257,7 +266,7 @@ namespace OfflineMap
             }
         }
 
-        private async void TryLoadLocalLayer()
+        private async void TryLoadLocalLayers()
         {
             try
             {
@@ -277,7 +286,25 @@ namespace OfflineMap
                 // open the local geodatabase, get the first (only) table, create a FeatureLayer to display it
                 var localGdb = await Geodatabase.OpenAsync(this.localGeodatabasePath);
                 var gdbTable = localGdb.FeatureTables.FirstOrDefault();
-                var operationLayer = new FeatureLayer
+                var operationalLayer = new FeatureLayer(gdbTable);
+
+                // give the feature layer an ID so it can be found later
+                operationalLayer.ID = "Sightings";
+
+                await basemapLayer.InitializeAsync();
+                await operationalLayer.InitializeAsync();
+
+                // see if there was an exception when initializing the layer
+                if (basemapLayer.InitializationException != null || operationalLayer.InitializationException != null)
+                {
+                    // unable to load one or more of the layers, throw an exception
+                    throw new Exception("Could not initialize local layers");
+                }
+
+                // add the local layers to the map
+                MyMapView.Map.Layers.Add(basemapLayer);
+                MyMapView.Map.Layers.Add(operationalLayer);
+
             }
             catch (Exception exp)
             {
